@@ -1,6 +1,6 @@
 # TOC Project 2017
 
-Template Code for TOC Project 2017
+Final project of "theory of computation", Fall 2017.
 
 A telegram bot based on a finite state machine
 
@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 ### Secret Data
 
-`API_TOKEN` and `WEBHOOK_URL` in app.py **MUST** be set to proper values.
+`WEBHOOK_URL` in app.py **MUST** be set to proper values.
 Otherwise, you might not be able to run your code.
 
 ### Run Locally
@@ -42,20 +42,35 @@ python3 app.py
 ```
 
 ## Finite State Machine
-![fsm](./img/show-fsm.png)
+![fsm](./state.png)
 
 ## Usage
 The initial state is set to `user`.
-
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
+Every time `user` state is triggered to `advance` to another state, it will  reply corresponding message.
+After transforming to an ending states (there are 4 ending states）,   it will `go_back` to `user` state.
 
 * user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
+	* Input: "書卷獎"
+		* Reply: "哇！你好棒喔！"
+	* Input: "all pass"
+		* Reply: "加油！下學期拼卷"
+	* Input: "被21"
+		* Reply: "GG!有被21過嗎？"
+		* Goto state3
 
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
+* state3
+	* Input: "沒有"
+		* Reply: "加油！下學期拼卷"
+	* Input: "有"
+		* Reply: "你/妳是男生還是女生呢？"
+		* Goto state4
+
+* state4
+	* Input: "男生"
+		* Reply: "祝 當兵愉快：)"
+	* Input: "女生"
+		* Reply: "再考一次大學吧～"
 
 
 ## Author
-[Lee-W](https://github.com/Lee-W)
+[Justin-Bau](https://github.com/bauuuu1021)

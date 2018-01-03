@@ -7,35 +7,71 @@ from flask import Flask, request, send_file
 from fsm import TocMachine
 
 
-API_TOKEN = 'Your Telegram API Token'
-WEBHOOK_URL = 'Your Webhook URL'
+API_TOKEN = '495734865:AAGXHET9djoYmgjiCpusNAU1dt1gt4nlHig'
+WEBHOOK_URL = 'https://dd4211c7.ngrok.io/hook'
 
 app = Flask(__name__)
 bot = telegram.Bot(token=API_TOKEN)
-machine = TocMachine(
+machine = TocMachine(title='figure',
     states=[
         'user',
         'state1',
-        'state2'
+        'state2',
+        'state3',
+        'state4',
+        'state5',
+        'state6'
     ],
     transitions=[
         {
             'trigger': 'advance',
             'source': 'user',
             'dest': 'state1',
-            'conditions': 'is_going_to_state1'
+            'conditions': 'user_to_state1'
         },
         {
             'trigger': 'advance',
             'source': 'user',
             'dest': 'state2',
-            'conditions': 'is_going_to_state2'
+            'conditions': 'user_to_state2'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'user',
+            'dest': 'state3',
+            'conditions': 'user_to_state3'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'state3',
+            'dest': 'state2',
+            'conditions': 'state3_to_state2'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'state3',
+            'dest': 'state4',
+            'conditions': 'state3_to_state4'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'state4',
+            'dest': 'state5',
+            'conditions': 'state4_to_state5'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'state4',
+            'dest': 'state6',
+            'conditions': 'state4_to_state6'
         },
         {
             'trigger': 'go_back',
             'source': [
                 'state1',
-                'state2'
+                'state2',
+                'state5',
+                'state6'
             ],
             'dest': 'user'
         }
@@ -69,7 +105,8 @@ def show_fsm():
     byte_io.seek(0)
     return send_file(byte_io, attachment_filename='fsm.png', mimetype='image/png')
 
-
 if __name__ == "__main__":
     _set_webhook()
+    machine.get_graph().draw("state.png",prog="dot")
     app.run()
+
